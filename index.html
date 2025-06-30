@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 400px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .play-btn {
+            background: linear-gradient(45deg, #ff7e5f, #feb47b);
+            border: none;
+            color: white;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .play-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        
+        p {
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+        
+        .visualizer {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            height: 100px;
+            margin: 30px 0;
+            gap: 5px;
+        }
+        
+        .bar {
+            width: 8px;
+            background: linear-gradient(to top, #ff7e5f, #ffffff);
+            border-radius: 5px;
+            transition: height 0.2s ease;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Today Is An Especial Day For My Broo!!</h1>
+        <h4>Happy Birthday My Son</h4>
+        <p>On 30th June.. plz Click Play Music Button</p>
+        
+        <div class="visualizer" id="visualizer">
+        </div>
+        
+        <button class="play-btn" id="playBtn">
+            <i class="fas fa-play"></i> Play Music
+        </button>
+    </div>
+
+    <audio id="bgMusic" src="audio.mp3" loop></audio>
+
+    <script>
+        const playBtn = document.getElementById('playBtn');
+        const bgMusic = document.getElementById('bgMusic');
+        const visualizer = document.getElementById('visualizer');
+        
+        for (let i = 0; i < 20; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'bar';
+            bar.style.height = `${Math.random() * 60 + 20}px`;
+            visualizer.appendChild(bar);
+        }
+        
+        const bars = document.querySelectorAll('.bar');
+        
+        function animateBars() {
+            bars.forEach(bar => {
+                bar.style.height = `${Math.random() * 80 + 20}px`;
+            });
+            requestAnimationFrame(animateBars);
+        }
+        
+        animateBars();
+        
+        playBtn.addEventListener('click', function() {
+            bgMusic.play()
+                .then(() => {
+                    window.open('intro.html', '_blank');
+                    
+                })
+                .catch(error => {
+                    console.log('Audio playback failed:', error);
+                });
+        });
+        
+        window.addEventListener('load', function() {
+            bgMusic.play().catch(e => {
+                console.log("Autoplay blocked - user must interact first");
+            });
+        });
+    </script>
+</body>
+</html>

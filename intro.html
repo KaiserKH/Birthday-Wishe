@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Brooooo!...</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+        
+        .container {
+            text-align: center;
+            z-index: 10;
+        }
+        
+        .birthday-text {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+        
+        .play-btn {
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            color: white;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        .play-btn i {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f0f;
+            opacity: 0.8;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="birthday-text">Happy Birthday Again Meri Jaan!</div>
+        <p></p>
+        <button class="play-btn" id="playBtn">
+            <i class="fas fa-play"></i>
+          
+          👉Click Here👆
+          
+        </button>
+    </div>
+
+    <audio id="bgMusic" src="hgfc.mp3" loop></audio>
+
+    <script>
+        const playBtn = document.getElementById('playBtn');
+        const bgMusic = document.getElementById('bgMusic');
+        
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * window.innerWidth + 'px';
+            confetti.style.top = -10 + 'px';
+            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+            document.body.appendChild(confetti);
+            
+            let posY = -10;
+            let speed = 2 + Math.random() * 3;
+            let angle = Math.random() * 360;
+            let spin = Math.random() * 10 - 5;
+            let spinAngle = 0;
+            
+            function animate() {
+                posY += speed;
+                angle += 0.1;
+                spinAngle += spin;
+                
+                const x = parseFloat(confetti.style.left) + Math.sin(angle) * 2;
+                confetti.style.left = x + 'px';
+                confetti.style.top = posY + 'px';
+                confetti.style.transform = `rotate(${spinAngle}deg)`;
+                
+                if (posY < window.innerHeight) {
+                    requestAnimationFrame(animate);
+                } else {
+                    confetti.remove();
+                }
+            }
+            
+            animate();
+        }
+        setInterval(createConfetti, 100);
+        playBtn.addEventListener('click', function() {
+            bgMusic.play();
+            
+            for(let i = 0; i < 50; i++) {
+                setTimeout(createConfetti, i * 50);
+            }
+            
+            setTimeout(function() {
+                window.location.href = "gallery.html";
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
